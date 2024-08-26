@@ -7,21 +7,18 @@ import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 import { fetchInvoicesPages } from "@/app/lib/data";
 
-interface InvoicesPageParams {
+export default async function Page({
+  searchParams,
+}: {
   searchParams?: {
     query?: string;
     page?: string;
   };
-}
-
-type InvoicesPageTypes = {
-  params: InvoicesPageParams;
-};
-
-export default async function Page({ params }: InvoicesPageTypes) {
-  const query = params.searchParams?.query || "";
-  const currentPage = Number(params.searchParams?.page) || 1;
+}) {
+  const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page) || 1;
   const totalPages = await fetchInvoicesPages(query);
+  console.log(`params: ${searchParams}`);
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
